@@ -33,7 +33,7 @@ class BarcodeAPI
     boundary = "----------#{rand(1_000_000)}"
     body = build_multipart({ 'image' => data }, boundary)
     headers = { 'Content-Type' => "multipart/form-data; boundary=#{boundary}" }
-    resp = request(:post, '/decode', headers: headers, body: body)
+    resp = request(:post, '/decode/', headers: headers, body: body)
     JSON.parse(resp.body)
   end
 
@@ -42,48 +42,48 @@ class BarcodeAPI
     boundary = "----------#{rand(1_000_000)}"
     body = build_multipart({ 'csvFile' => data }, boundary)
     headers = { 'Content-Type' => "multipart/form-data; boundary=#{boundary}" }
-    resp = request(:post, '/bulk', headers: headers, body: body)
+    resp = request(:post, '/bulk/', headers: headers, body: body)
     resp.body
   end
 
   def get_info
-    resp = request(:get, '/info')
+    resp = request(:get, '/info/')
     JSON.parse(resp.body)
   end
 
   def get_types
-    resp = request(:get, '/types')
+    resp = request(:get, '/types/')
     JSON.parse(resp.body)
   end
 
   def get_type(type_name)
-    resp = request(:get, '/type', params: { type: type_name })
+    resp = request(:get, '/type/', params: { type: type_name })
     JSON.parse(resp.body)
   end
 
   def get_limiter
-    resp = request(:get, '/limiter')
+    resp = request(:get, '/limiter/')
     JSON.parse(resp.body)
   end
 
   def get_session
-    resp = request(:get, '/session')
+    resp = request(:get, '/session/')
     JSON.parse(resp.body)
   end
 
   def delete_session
-    request(:delete, '/session')
+    request(:delete, '/session/')
     true
   end
 
   def create_share(requests_list)
     headers = { 'Content-Type' => 'application/json' }
-    resp = request(:post, '/share', headers: headers, body: requests_list.to_json)
+    resp = request(:post, '/share/', headers: headers, body: requests_list.to_json)
     resp.body.strip
   end
 
   def get_share(key)
-    resp = request(:get, '/share', params: { key: key })
+    resp = request(:get, '/share/', params: { key: key })
     JSON.parse(resp.body)
   end
 
