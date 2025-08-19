@@ -27,7 +27,7 @@ class TestBarcodeAPI < Minitest::Test
     client = BarcodeAPI.new(base_url: 'https://example.com', requester: requester)
     result = client.decode('123')
     assert_equal :post, captured[:method]
-    assert_equal 'https://example.com/decode', captured[:url]
+    assert_equal 'https://example.com/decode/', captured[:url]
     assert_match(/image/, captured[:body])
     assert_equal '123', result['text']
   end

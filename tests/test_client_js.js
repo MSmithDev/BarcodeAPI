@@ -30,7 +30,7 @@ test('decode posts image', async () => {
   const client = new BarcodeAPI({ baseUrl: 'https://example.com' });
   const result = await client.decode(Buffer.from('123'));
   assert.strictEqual(result.text, '123');
-  assert.strictEqual(captured.url, 'https://example.com/decode');
+  assert.strictEqual(captured.url, 'https://example.com/decode/');
   assert.ok(captured.body instanceof FormData);
   assert.ok(captured.body.get('image'));
   global.fetch = realFetch;

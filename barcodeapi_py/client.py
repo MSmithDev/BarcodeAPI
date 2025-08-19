@@ -129,7 +129,7 @@ class BarcodeAPI:
 
         data = self._read_file(image)
         files = {"image": ("image.png", data)}
-        resp = self.session.post(f"{self.base_url}/decode", files=files)
+        resp = self.session.post(f"{self.base_url}/decode/", files=files)
         resp.raise_for_status()
         return resp.json()
 
@@ -153,43 +153,43 @@ class BarcodeAPI:
 
         data = self._read_file(csv)
         files = {"csvFile": ("bulk.csv", data)}
-        resp = self.session.post(f"{self.base_url}/bulk", files=files)
+        resp = self.session.post(f"{self.base_url}/bulk/", files=files)
         resp.raise_for_status()
         return resp.content
 
     def get_info(self) -> dict:
         """Fetch server information."""
-        resp = self.session.get(f"{self.base_url}/info")
+        resp = self.session.get(f"{self.base_url}/info/")
         resp.raise_for_status()
         return resp.json()
 
     def get_types(self) -> list:
         """Return a list of all supported barcode types."""
-        resp = self.session.get(f"{self.base_url}/types")
+        resp = self.session.get(f"{self.base_url}/types/")
         resp.raise_for_status()
         return resp.json()
 
     def get_type(self, type_name: str) -> dict:
         """Return details for a single barcode type."""
-        resp = self.session.get(f"{self.base_url}/type", params={"type": type_name})
+        resp = self.session.get(f"{self.base_url}/type/", params={"type": type_name})
         resp.raise_for_status()
         return resp.json()
 
     def get_limiter(self) -> dict:
         """Return rate limit information for the current client."""
-        resp = self.session.get(f"{self.base_url}/limiter")
+        resp = self.session.get(f"{self.base_url}/limiter/")
         resp.raise_for_status()
         return resp.json()
 
     def get_session(self) -> dict:
         """Return session details if the request includes a valid session."""
-        resp = self.session.get(f"{self.base_url}/session")
+        resp = self.session.get(f"{self.base_url}/session/")
         resp.raise_for_status()
         return resp.json()
 
     def delete_session(self) -> bool:
         """Delete the current session."""
-        resp = self.session.delete(f"{self.base_url}/session")
+        resp = self.session.delete(f"{self.base_url}/session/")
         resp.raise_for_status()
         return True
 
@@ -208,12 +208,12 @@ class BarcodeAPI:
             The share key returned by the server.
         """
 
-        resp = self.session.post(f"{self.base_url}/share", json=list(requests_list))
+        resp = self.session.post(f"{self.base_url}/share/", json=list(requests_list))
         resp.raise_for_status()
         return resp.text.strip()
 
     def get_share(self, key: str) -> dict:
         """Retrieve a previously created share."""
-        resp = self.session.get(f"{self.base_url}/share", params={"key": key})
+        resp = self.session.get(f"{self.base_url}/share/", params={"key": key})
         resp.raise_for_status()
         return resp.json()

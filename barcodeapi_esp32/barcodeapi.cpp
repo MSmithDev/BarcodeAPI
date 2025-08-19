@@ -113,7 +113,7 @@ Response BarcodeAPI::decode(const std::string& image) {
     body << "\r\n--" << boundary << "--\r\n";
     Headers hdr = headers_;
     hdr["Content-Type"] = "multipart/form-data; boundary=" + boundary;
-    return request("POST", baseUrl_ + "/decode", hdr, body.str());
+    return request("POST", baseUrl_ + "/decode/", hdr, body.str());
 }
 
 Response BarcodeAPI::bulkGenerate(const std::string& csv) {
@@ -126,31 +126,31 @@ Response BarcodeAPI::bulkGenerate(const std::string& csv) {
     body << "\r\n--" << boundary << "--\r\n";
     Headers hdr = headers_;
     hdr["Content-Type"] = "multipart/form-data; boundary=" + boundary;
-    return request("POST", baseUrl_ + "/bulk", hdr, body.str());
+    return request("POST", baseUrl_ + "/bulk/", hdr, body.str());
 }
 
 Response BarcodeAPI::getInfo() {
-    return request("GET", baseUrl_ + "/info", headers_, "");
+    return request("GET", baseUrl_ + "/info/", headers_, "");
 }
 
 Response BarcodeAPI::getTypes() {
-    return request("GET", baseUrl_ + "/types", headers_, "");
+    return request("GET", baseUrl_ + "/types/", headers_, "");
 }
 
 Response BarcodeAPI::getType(const std::string& typeName) {
-    return request("GET", baseUrl_ + "/type?type=" + encode(typeName), headers_, "");
+    return request("GET", baseUrl_ + "/type/?type=" + encode(typeName), headers_, "");
 }
 
 Response BarcodeAPI::getLimiter() {
-    return request("GET", baseUrl_ + "/limiter", headers_, "");
+    return request("GET", baseUrl_ + "/limiter/", headers_, "");
 }
 
 Response BarcodeAPI::getSession() {
-    return request("GET", baseUrl_ + "/session", headers_, "");
+    return request("GET", baseUrl_ + "/session/", headers_, "");
 }
 
 Response BarcodeAPI::deleteSession() {
-    return request("DELETE", baseUrl_ + "/session", headers_, "");
+    return request("DELETE", baseUrl_ + "/session/", headers_, "");
 }
 
 Response BarcodeAPI::createShare(const std::vector<std::string>& requestsList) {
@@ -163,10 +163,10 @@ Response BarcodeAPI::createShare(const std::vector<std::string>& requestsList) {
     body << "]";
     Headers hdr = headers_;
     hdr["Content-Type"] = "application/json";
-    return request("POST", baseUrl_ + "/share", hdr, body.str());
+    return request("POST", baseUrl_ + "/share/", hdr, body.str());
 }
 
 Response BarcodeAPI::getShare(const std::string& key) {
-    return request("GET", baseUrl_ + "/share?key=" + encode(key), headers_, "");
+    return request("GET", baseUrl_ + "/share/?key=" + encode(key), headers_, "");
 }
 

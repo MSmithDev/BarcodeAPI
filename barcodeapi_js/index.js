@@ -57,7 +57,7 @@ class BarcodeAPI {
     const blob = await this._toBlob(image);
     const form = new FormData();
     form.append('image', blob, 'image.png');
-    const resp = await fetch(`${this.baseUrl}/decode`, {
+    const resp = await fetch(`${this.baseUrl}/decode/`, {
       method: 'POST',
       headers: this.headers,
       body: form,
@@ -72,7 +72,7 @@ class BarcodeAPI {
     const blob = await this._toBlob(csv);
     const form = new FormData();
     form.append('csvFile', blob, 'bulk.csv');
-    const resp = await fetch(`${this.baseUrl}/bulk`, {
+    const resp = await fetch(`${this.baseUrl}/bulk/`, {
       method: 'POST',
       headers: this.headers,
       body: form,
@@ -84,7 +84,7 @@ class BarcodeAPI {
   }
 
   async getInfo() {
-    const resp = await fetch(`${this.baseUrl}/info`, { headers: this.headers });
+    const resp = await fetch(`${this.baseUrl}/info/`, { headers: this.headers });
     if (!resp.ok) {
       throw new Error('HTTP error');
     }
@@ -92,7 +92,7 @@ class BarcodeAPI {
   }
 
   async getTypes() {
-    const resp = await fetch(`${this.baseUrl}/types`, { headers: this.headers });
+    const resp = await fetch(`${this.baseUrl}/types/`, { headers: this.headers });
     if (!resp.ok) {
       throw new Error('HTTP error');
     }
@@ -100,7 +100,7 @@ class BarcodeAPI {
   }
 
   async getType(typeName) {
-    const url = new URL(`${this.baseUrl}/type`);
+    const url = new URL(`${this.baseUrl}/type/`);
     url.searchParams.set('type', typeName);
     const resp = await fetch(url, { headers: this.headers });
     if (!resp.ok) {
@@ -110,7 +110,7 @@ class BarcodeAPI {
   }
 
   async getLimiter() {
-    const resp = await fetch(`${this.baseUrl}/limiter`, { headers: this.headers });
+    const resp = await fetch(`${this.baseUrl}/limiter/`, { headers: this.headers });
     if (!resp.ok) {
       throw new Error('HTTP error');
     }
@@ -118,7 +118,7 @@ class BarcodeAPI {
   }
 
   async getSession() {
-    const resp = await fetch(`${this.baseUrl}/session`, { headers: this.headers });
+    const resp = await fetch(`${this.baseUrl}/session/`, { headers: this.headers });
     if (!resp.ok) {
       throw new Error('HTTP error');
     }
@@ -126,7 +126,7 @@ class BarcodeAPI {
   }
 
   async deleteSession() {
-    const resp = await fetch(`${this.baseUrl}/session`, { method: 'DELETE', headers: this.headers });
+    const resp = await fetch(`${this.baseUrl}/session/`, { method: 'DELETE', headers: this.headers });
     if (!resp.ok) {
       throw new Error('HTTP error');
     }
@@ -134,7 +134,7 @@ class BarcodeAPI {
   }
 
   async createShare(requestsList) {
-    const resp = await fetch(`${this.baseUrl}/share`, {
+    const resp = await fetch(`${this.baseUrl}/share/`, {
       method: 'POST',
       headers: { ...this.headers, 'Content-Type': 'application/json' },
       body: JSON.stringify(Array.from(requestsList)),
@@ -146,7 +146,7 @@ class BarcodeAPI {
   }
 
   async getShare(key) {
-    const url = new URL(`${this.baseUrl}/share`);
+    const url = new URL(`${this.baseUrl}/share/`);
     url.searchParams.set('key', key);
     const resp = await fetch(url, { headers: this.headers });
     if (!resp.ok) {

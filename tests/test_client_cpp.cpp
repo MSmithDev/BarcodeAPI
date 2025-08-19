@@ -23,7 +23,7 @@ int main() {
     BarcodeAPI client2("https://example.com", "", req2);
     auto resp = client2.decode("123");
     assert(cap2.method == "POST");
-    assert(cap2.url == "https://example.com/decode");
+    assert(cap2.url == "https://example.com/decode/");
     assert(cap2.headers.count("Content-Type"));
     assert(cap2.headers["Content-Type"].find("multipart/form-data") != std::string::npos);
     assert(cap2.body.find("123") != std::string::npos);

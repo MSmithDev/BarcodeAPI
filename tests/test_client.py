@@ -49,7 +49,7 @@ def test_decode_posts_image():
     client.session.post = fake_post  # type: ignore[assignment]
     result = client.decode(b"123")
     assert result["text"] == "123"
-    assert captured["url"] == "https://example.com/decode"
+    assert captured["url"] == "https://example.com/decode/"
     assert "image" in captured["files"]
 
 
