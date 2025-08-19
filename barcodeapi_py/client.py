@@ -12,6 +12,9 @@ try:  # pragma: no cover - used only when requests is unavailable
     import requests
 except ModuleNotFoundError:  # pragma: no cover
     class _DummySession:  # minimal stub used for environments without requests
+        def __init__(self):  # pragma: no cover - simple container for headers
+            self.headers = {}
+
         def get(self, *args, **kwargs):  # pragma: no cover
             raise ModuleNotFoundError("requests library is required")
 
@@ -34,11 +37,33 @@ class BarcodeAPI:
         Base URL of the BarcodeAPI server. Defaults to ``https://barcodeapi.org``.
     session: requests.Session, optional
         Optional :class:`requests.Session` instance to use for requests.
+    token: str, optional
+        API token used to authenticate requests. When provided, the token is
+        passed using the ``Authorization`` header.
     """
 
-    def __init__(self, base_url: str = "https://barcodeapi.org", session: Optional[requests.Session] = None):
+    def __init__(
+        self,
+        base_url: str = "https://barcodeapi.org",
+        session: Optional[requests.Session] = None,
+        token: Optional[str] = None,
+    ):
         self.base_url = base_url.rstrip("/")
         self.session = session or requests.Session()
+        self.token: Optional[str] = None
+        if token:
+            self.set_token(token)
+
+    def set_token(self, token: Optional[str]) -> None:
+        """Set or clear the API token used for requests.
+
+        Passing ``None`` removes any existing token.
+        """
+        self.token = token
+        if token:
+            self.session.headers["Authorization"] = f"Token={token}"
+        else:
+            self.session.headers.pop("Authorization", None)
 
     # ------------------------------------------------------------------
     # Internal helpers

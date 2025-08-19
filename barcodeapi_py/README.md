@@ -17,7 +17,7 @@ pip install requests
 ```python
 from barcodeapi_py import BarcodeAPI
 
-api = BarcodeAPI()
+api = BarcodeAPI(token="YOUR_API_TOKEN")  # token is optional
 
 # Generate a barcode and save it to a file
 resp = api.generate("Hello World", code_type="qr", params={"height": 200})
@@ -38,6 +38,18 @@ types = api.get_types()
 print("Supported types:", [t["name"] for t in types])
 ```
 
+### API Tokens
+
+If you have an API token, pass it when creating the client or set it later:
+
+```python
+api = BarcodeAPI(token="my-token")
+api.set_token("new-token")  # update or clear with None
+```
+
+The token is sent using the ``Authorization`` header and is used for
+authenticating requests and tracking rate limits.
+
 ## Available Methods
 
 | Method | Description |
@@ -51,5 +63,6 @@ print("Supported types:", [t["name"] for t in types])
 | `get_limiter()` | Return rate‑limit information for the current client. |
 | `get_session()` / `delete_session()` | Inspect or delete the current session. |
 | `create_share(requests_list)` / `get_share(key)` | Create or fetch a share that groups multiple barcode requests. |
+| `set_token(token)` | Set or clear the API token used for requests. |
 
 For full API documentation please see [barcodeapi.org/api.html](https://barcodeapi.org/api.html).

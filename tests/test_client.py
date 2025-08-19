@@ -51,3 +51,12 @@ def test_decode_posts_image():
     assert result["text"] == "123"
     assert captured["url"] == "https://example.com/decode"
     assert "image" in captured["files"]
+
+
+def test_token_header_and_setter():
+    client = BarcodeAPI(base_url="https://example.com", token="abc")
+    assert client.session.headers["Authorization"] == "Token=abc"
+    client.set_token("xyz")
+    assert client.session.headers["Authorization"] == "Token=xyz"
+    client.set_token(None)
+    assert "Authorization" not in client.session.headers
